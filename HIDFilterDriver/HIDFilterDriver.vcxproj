@@ -122,10 +122,12 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config.c" />
     <ClCompile Include="Device.c" />
     <ClCompile Include="Driver.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Driver.h" />
   </ItemGroup>

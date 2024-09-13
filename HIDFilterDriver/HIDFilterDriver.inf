@@ -58,6 +58,10 @@ ServiceBinary=%12%\WUDFRd.sys
 [HIDFilterDriver_Install]
 UmdfLibraryVersion = $UMDFVERSION$
 ServiceBinary = %12%\UMDF\HIDFilterDriver.dll
+AddReg = HIDFilterDriver_AddReg
+
+[HIDFilterDriver_AddReg]
+; TODO: set driver configuration
 
 [DestinationDirs]
 UMDriverCopy=12,UMDF

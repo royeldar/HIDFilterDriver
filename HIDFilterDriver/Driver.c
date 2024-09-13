@@ -2,6 +2,7 @@
 #include "Driver.tmh"
 #include "Driver.h"
 #include "Device.h"
+#include "Config.h"
 
 static EVT_WDF_DRIVER_UNLOAD MyEvtDriverUnload;
 
@@ -9,6 +10,7 @@ NTSTATUS DriverEntry(IN PDRIVER_OBJECT DriverObject, IN PUNICODE_STRING Registry
 	NTSTATUS status = STATUS_SUCCESS;
 	WDF_DRIVER_CONFIG config;
 	WDFDRIVER driver;
+	WDFKEY key;
 
 	// Initialize WPP Tracing
 	WPP_INIT_TRACING(DriverObject, RegistryPath);
@@ -22,6 +24,28 @@ NTSTATUS DriverEntry(IN PDRIVER_OBJECT DriverObject, IN PUNICODE_STRING Registry
 	if (!NT_SUCCESS(status)) {
 		// Cleanup tracing
 		DoTraceMessage(TRACE_DRIVER, "[%!FUNC!] Failed to create driver (0x%08x)!", status);
+		WPP_CLEANUP(DriverObject);
+		return status;
+	}
+
+	// Open the driver's parameters registry key
+	status = WdfDriverOpenParametersRegistryKey(driver, KEY_READ, WDF_NO_OBJECT_ATTRIBUTES, &key);
+	if (!NT_SUCCESS(status)) {
+		// Cleanup tracing
+		DoTraceMessage(TRACE_DRIVER, "[%!FUNC!] Failed to open registry key (0x%08x)!", status);
+		WPP_CLEANUP(DriverObject);
+		return status;
+	}
+
+	// Retrieve driver-specific config from the registry
+	status = GetDriverConfig(key);
+
+	// Close the registry key
+	WdfRegistryClose(key);
+
+	if (!NT_SUCCESS(status)) {
+		// Cleanup tracing
+		DoTraceMessage(TRACE_DRIVER, "[%!FUNC!] Failed to get driver parameters (0x%08x)!", status);
 		WPP_CLEANUP(DriverObject);
 		return status;
 	}
