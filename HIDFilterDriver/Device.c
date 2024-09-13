@@ -1,6 +1,7 @@
 #include "Trace.h"
 #include "Device.tmh"
 #include "Device.h"
+#include "Events.h"
 
 NTSTATUS MyEvtDeviceAdd(IN WDFDRIVER Driver, IN PWDFDEVICE_INIT DeviceInit) {
 	NTSTATUS status = STATUS_SUCCESS;
@@ -21,6 +22,9 @@ NTSTATUS MyEvtDeviceAdd(IN WDFDRIVER Driver, IN PWDFDEVICE_INIT DeviceInit) {
 
 	// Create an I/O queue for the device
 	WDF_IO_QUEUE_CONFIG_INIT_DEFAULT_QUEUE(&ioQueueConfig, WdfIoQueueDispatchParallel);
+	ioQueueConfig.EvtIoRead = MyEvtIoRead;
+	ioQueueConfig.EvtIoWrite = MyEvtIoWrite;
+	ioQueueConfig.EvtIoDeviceControl = MyEvtIoDeviceControl;
 	status = WdfIoQueueCreate(device, &ioQueueConfig, WDF_NO_OBJECT_ATTRIBUTES, WDF_NO_HANDLE);
 	if (!NT_SUCCESS(status)) {
 		DoTraceMessage(TRACE_DRIVER, "[%!FUNC!] Failed to create i/o queue (0x%08x)!", status);
