@@ -127,6 +127,7 @@
     <ClCompile Include="Device.c" />
     <ClCompile Include="Driver.c" />
     <ClCompile Include="Events.c" />
+    <ClCompile Include="Hid.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Callbacks.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Device.h" />
     <ClInclude Include="Driver.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="Hid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
