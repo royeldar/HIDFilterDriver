@@ -128,6 +128,7 @@
     <ClCompile Include="Driver.c" />
     <ClCompile Include="Events.c" />
     <ClCompile Include="Hid.c" />
+    <ClCompile Include="Input.c" />
     <ClCompile Include="Worker.c" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,7 @@
     <ClInclude Include="Driver.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Hid.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Worker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
