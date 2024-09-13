@@ -18,6 +18,9 @@
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <Inf Include="HIDFilterDriver.inf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D1B31596-8BDA-4C01-97B5-45427710FE12}</ProjectGuid>
     <TemplateGuid>{87922215-2677-415f-98a9-1b7e3b25b8bf}</TemplateGuid>

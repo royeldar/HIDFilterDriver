@@ -19,6 +19,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Inf Include="HIDFilterDriver.inf">
+      <Filter>Driver Files</Filter>
+    </Inf>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="Driver.c">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -61,3 +61,11 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# behavior for INF files
+#
+# INF files must be either ANSI or Unicode (UTF-16 LE), but Unicode is better;
+# also, there is a BOM character, hence UTF-16LE-BOM is used.
+###############################################################################
+*.inf text working-tree-encoding=UTF-16LE-BOM eol=CRLF
