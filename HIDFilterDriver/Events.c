@@ -1,6 +1,7 @@
 #include "Trace.h"
 #include "Events.tmh"
 #include "Events.h"
+#include "Callbacks.h"
 
 static EVT_WDF_REQUEST_COMPLETION_ROUTINE MyEvtIoReadRequestCompletionRoutine;
 static EVT_WDF_REQUEST_COMPLETION_ROUTINE MyEvtIoWriteRequestCompletionRoutine;
@@ -52,11 +53,16 @@ void MyEvtIoRead(IN WDFQUEUE Queue, IN WDFREQUEST Request, IN size_t Length) {
 
 static void MyEvtIoReadRequestCompletionRoutine(IN WDFREQUEST Request, IN WDFIOTARGET Target, IN PWDF_REQUEST_COMPLETION_PARAMS Params, IN WDFCONTEXT Context) {
 	NTSTATUS status;
+	WDFMEMORY buffer;
 
 	UNREFERENCED_PARAMETER(Target);
 	UNREFERENCED_PARAMETER(Context);
 
 	status = Params->IoStatus.Status;
+	buffer = Params->Parameters.Read.Buffer;
+
+	// Hook after completing the I/O request
+	PostReadCompleteCallback(buffer);
 
 	// Complete the I/O request
 	WdfRequestComplete(Request, status);
@@ -83,6 +89,9 @@ void MyEvtIoWrite(IN WDFQUEUE Queue, IN WDFREQUEST Request, IN size_t Length) {
 			return;
 		}
 	}
+
+	// Hook before sending the I/O request
+	PreWriteSendCallback(buffer);
 
 	// Get the I/O target for the device
 	device = WdfIoQueueGetDevice(Queue);
@@ -153,6 +162,9 @@ void MyEvtIoDeviceControl(IN WDFQUEUE Queue, IN WDFREQUEST Request, IN size_t Ou
 		}
 	}
 
+	// Hook before sending the I/O request
+	PreIoctlSendCallback(IoControlCode, inputBuffer);
+
 	// Get the I/O target for the device
 	device = WdfIoQueueGetDevice(Queue);
 	target = WdfDeviceGetIoTarget(device);
@@ -177,11 +189,20 @@ void MyEvtIoDeviceControl(IN WDFQUEUE Queue, IN WDFREQUEST Request, IN size_t Ou
 
 static void MyEvtIoctlRequestCompletionRoutine(IN WDFREQUEST Request, IN WDFIOTARGET Target, IN PWDF_REQUEST_COMPLETION_PARAMS Params, IN WDFCONTEXT Context) {
 	NTSTATUS status;
+	ULONG ioControlCode;
+	WDFMEMORY inputBuffer;
+	WDFMEMORY outputBuffer;
 
 	UNREFERENCED_PARAMETER(Target);
 	UNREFERENCED_PARAMETER(Context);
 
 	status = Params->IoStatus.Status;
+	ioControlCode = Params->Parameters.Ioctl.IoControlCode;
+	inputBuffer = Params->Parameters.Ioctl.Input.Buffer;
+	outputBuffer = Params->Parameters.Ioctl.Output.Buffer;
+
+	// Hook after completing the I/O request
+	PostIoctlCompleteCallback(ioControlCode, inputBuffer, outputBuffer);
 
 	// Complete the I/O request
 	WdfRequestComplete(Request, status);
