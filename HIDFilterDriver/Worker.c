@@ -2,6 +2,7 @@
 #include "Worker.tmh"
 #include "Worker.h"
 #include "Input.h"
+#include "Params.h"
 
 volatile BOOL g_workerExit = FALSE;
 
@@ -17,7 +18,7 @@ DWORD WINAPI MyWorkerThread(LPVOID lpParam) {
 	while (!g_workerExit) {
 		if (file == INVALID_HANDLE_VALUE) {
 			// Try to open serial port
-			file = OpenSerialPort(L"COM1");
+			file = OpenSerialPort(g_serialportname);
 		}
 		if (file != INVALID_HANDLE_VALUE) {
 			// Try to read bytes from serial
@@ -88,7 +89,7 @@ static HANDLE OpenSerialPort(LPCWSTR portName) {
 
 	// Build control settings
 	memset(&dcb, 0, sizeof(dcb));
-	if (!BuildCommDCBA("baud=9600 parity=N data=8 stop=1", &dcb)) {
+	if (!BuildCommDCBW(g_serialportconfig, &dcb)) {
 		DoTraceMessage(TRACE_DRIVER, "[%!FUNC!] Failed to build communication control settings (0x%x)!", GetLastError());
 		goto error;
 	}

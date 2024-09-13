@@ -48,6 +48,9 @@
     <ClCompile Include="Input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Params.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Driver.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Params.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

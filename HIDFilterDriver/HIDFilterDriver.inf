@@ -61,7 +61,8 @@ ServiceBinary = %12%\UMDF\HIDFilterDriver.dll
 AddReg = HIDFilterDriver_AddReg
 
 [HIDFilterDriver_AddReg]
-; TODO: set driver configuration
+HKR,"Parameters","SerialPortName",0x00000000,"COM1"
+HKR,"Parameters","SerialPortConfig",0x00000000,"baud=9600 parity=N data=8 stop=1"
 
 [DestinationDirs]
 UMDriverCopy=12,UMDF
