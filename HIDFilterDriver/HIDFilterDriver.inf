@@ -17,8 +17,8 @@ PnpLockdown = 1
 %ManufacturerName% = Standard,NT$ARCH$.10.0...
 
 [Standard.NT$ARCH$.10.0...]
-; TODO: set hardware ID appropriately
-%DeviceName% = MyDevice_Install, HID\VID_0000&PID_0000&REV_0000
+; Logic3 Topdrive GT
+%DeviceName% = MyDevice_Install, HID\VID_0E8F&PID_0003&REV_0109
 
 [SourceDisksFiles]
 HIDFilterDriver.dll=1
