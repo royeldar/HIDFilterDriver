@@ -6,12 +6,12 @@ void ModifyOutputReport(char *buffer, size_t size) {
 	(void)buffer;
 	(void)size;
 
-	// TODO modify output report
+	// TODO modify force feedback
 }
 
 void ModifyInputReport(char *buffer, size_t size) {
 	(void)buffer;
 	(void)size;
 
-	// TODO modify input report
+	// TODO modify x axis
 }
