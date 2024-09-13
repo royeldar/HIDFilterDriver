@@ -1,3 +1,5 @@
+#include "Trace.h"
+#include "Device.tmh"
 #include "Device.h"
 
 NTSTATUS MyEvtDeviceAdd(IN WDFDRIVER Driver, IN PWDFDEVICE_INIT DeviceInit) {
